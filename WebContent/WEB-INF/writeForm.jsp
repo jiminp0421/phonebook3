@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +16,7 @@
 		아래 항목을 기입하고 "등록" 버튼을 클릭하세요.		
 	</p>
 	
-	<form action="/pb3/pbc?action=insert" method="get">
+	<form action="/pb3/pbc" method="get">
 		이름(name): <input type ="text" name="name" value=""> <br>
 		핸드폰(hp): <input type ="text" name="hp" value=""> <br>
 		회사(company): <input type ="text" name="company" value=""> <br>
@@ -23,7 +25,7 @@
 	</form>
 	
 	<p>
-		<a href="./list.jsp">리스트 바로가기</a>
+		<a href="./pbc?action=list">리스트 바로가기</a>
 	</p>
 	
 </body>

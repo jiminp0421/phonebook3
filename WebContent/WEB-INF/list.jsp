@@ -50,8 +50,10 @@
 				<td><%= vo.getCompany() %></td>
 			</tr>
 			<tr>
-				<td>수정</td>
-				<td>삭제></td>
+				<td><a href="/pb3/pbc?action=uform&id=<%=vo.getPersonId() %>">수정</a></td>
+				<td><a href = "/pb3/pbc?action=delete&pID=<%=vo.getPersonId() %>">삭제</a></td>
+				
+				
 			</tr>
 		</tbody>
 	</table>

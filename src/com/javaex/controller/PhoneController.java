@@ -48,8 +48,8 @@ public class PhoneController extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/list.jsp");
 			rd.forward(request, response);
 			*/
-	}else if("wform".equals(action)) {
-		System.out.println("주소록 등록폼");
+		} else if ("wform".equals(action)) {
+			System.out.println("주소록 등록폼");
 		
 		//포워드 하는방법
 			WebUtil.forword(request, response, "/WEB-INF/writeForm.jsp");
@@ -59,29 +59,71 @@ public class PhoneController extends HttpServlet {
 			rd.forward(request, response);
 			*/
 		
-	}else if("insert".equals(action)) {
-		System.out.println("번호 저장");
-		
-		String name = request.getParameter("name");
-		String hp = request.getParameter("hp");
-		String company = request.getParameter("company");
-		
-		PersonVo vo = new PersonVo(name, hp, company);
-		System.out.println(vo);
-		PhoneDao dao = new PhoneDao();
-		dao.personInsert(vo);
-		
-		//리다이렉트
-		WebUtil.redirect(request, response, "/pb3/pbc?action=list");
-		//response.sendRedirect("/pb3/pbc?action=list"); //리다이렉트는 다시 주소위치를 알려줘야한다
-		
-	}	
+			//저장
+		} else if ("insert".equals(action)) {
+			System.out.println("번호 저장");
 
+			String name = request.getParameter("name");
+			String hp = request.getParameter("hp");
+			String company = request.getParameter("company");
+
+			PersonVo vo = new PersonVo(name, hp, company);
+			System.out.println(vo);
+			PhoneDao dao = new PhoneDao();
+			dao.personInsert(vo);
+
+			// 리다이렉트
+			WebUtil.redirect(request, response, "/pb3/pbc?action=list");
+			// response.sendRedirect("/pb3/pbc?action=list"); //리다이렉트는 다시 주소위치를 알려줘야한다
+		
+		//삭제
+		} else if ("delete".equals(action)) {
+			System.out.println("번호 삭제");
+
+			PhoneDao phoneDao = new PhoneDao();
+
+			int pID = Integer.parseInt(request.getParameter("pID"));
+
+			phoneDao.personDelete(pID);
+
+			// PersonVo vo = new PersonVo(personId); -dao와 vo를 쓰는이유
+			// System.out.println(vo);
+
+			// 리다이렉트
+
+			WebUtil.redirect(request, response, "/pb3/pbc?action=list");
+			// RequestDispatcher rd =
+			// request.getRequestDispatcher("/WEB-INF/deleteForm.jsp");
+			// rd.forward(request, response);}
 		
 		
-		//리스트일때 action자리에 넣을거야
-		
-		//등록일때 action자리에 넣을거야
+		} else if ("uform".equals(action)) {
+
+			PhoneDao phoneDao = new PhoneDao();
+			int id = Integer.parseInt(request.getParameter("id"));
+
+			PersonVo vo = phoneDao.getPerson(id);
+
+			request.setAttribute("personVo", vo);
+			WebUtil.forword(request, response, "/WEB-INF/updateForm.jsp");
+
+		} else if ("update".equals(action)) {
+			System.out.println("update");
+			String name = request.getParameter("name");
+			String hp = request.getParameter("hp");
+			String company = request.getParameter("company");
+			int id = Integer.parseInt(request.getParameter("id"));
+
+			PersonVo vo = new PersonVo(id, name, hp, company);
+			// System.out.println(vo);
+			PhoneDao phoneDao = new PhoneDao();
+
+			phoneDao.personUpdate(vo);
+
+			WebUtil.redirect(request, response, "/pb3/pbc?action=list");
+
+		}
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

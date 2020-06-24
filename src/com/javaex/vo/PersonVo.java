@@ -20,6 +20,9 @@ public class PersonVo {
 		this.company = company;
 	}
 
+	
+	//g/s
+
 	public int getPersonId() {
 		return personId;
 	}

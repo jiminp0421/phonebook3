@@ -56,6 +56,7 @@ public class PhoneDao {
 			}
 		}
 
+		
 		// 사람 추가
 		public int personInsert(PersonVo personVo) {
 			int count = 0;
@@ -88,6 +89,7 @@ public class PhoneDao {
 		}
 		
 		
+		
 		//사람 리스트(검색안할때)
 		public List<PersonVo> getPersonList() {
 			return getPersonList("");
@@ -98,7 +100,6 @@ public class PhoneDao {
 			List<PersonVo> personList = new ArrayList<PersonVo>();
 
 			getConnection();
-
 			try {
 
 				// 3. SQL문 준비 / 바인딩 / 실행 --> 완성된 sql문을 가져와서 작성할것
@@ -107,7 +108,7 @@ public class PhoneDao {
 				query += "         name, ";
 				query += "         hp, ";
 				query += "         company ";
-				query += " from person";
+				query += " from phone";
 
 				if (keword != "" || keword == null) {
 					query += " where name like ? ";
@@ -155,7 +156,7 @@ public class PhoneDao {
 
 				// 3. SQL문 준비 / 바인딩 / 실행
 				String query = ""; // 쿼리문 문자열만들기, ? 주의
-				query += " update person ";
+				query += " update phone ";
 				query += " set name = ? , ";
 				query += "     hp = ? , ";
 				query += "     company = ? ";
@@ -181,6 +182,7 @@ public class PhoneDao {
 			return count;
 		}
 
+		
 		// 사람 삭제
 		public int personDelete(int personId) {
 			int count = 0;
@@ -189,7 +191,7 @@ public class PhoneDao {
 			try {
 				// 3. SQL문 준비 / 바인딩 / 실행
 				String query = ""; // 쿼리문 문자열만들기, ? 주의
-				query += " delete from person ";
+				query += " delete from phone ";
 				query += " where person_id = ? ";
 				pstmt = conn.prepareStatement(query); // 쿼리로 만들기
 
@@ -210,9 +212,9 @@ public class PhoneDao {
 		
 		//사람정보 updateForm.jsp
 		public PersonVo getPerson(int personId) {
-			
 			PersonVo personVo = null;
 			getConnection();
+			
 			try {
 				// 3. SQL문 준비 / 바인딩 / 실행 --> 완성된 sql문을 가져와서 작성할것
 				String query = "";
@@ -222,12 +224,11 @@ public class PhoneDao {
 				query += "         company ";
 				query += " from person ";
 				query += " where person_id = ? ";
-				pstmt = conn.prepareStatement(query); //쿼리로 만들기
+				pstmt = conn.prepareStatement(query); // 쿼리로 만들기
 				pstmt.setInt(1, personId);
-				
-				
+
 				rs = pstmt.executeQuery();
-				
+
 				while (rs.next()) {
 					int id = rs.getInt("person_id");
 					String name = rs.getString("name");
@@ -235,19 +236,18 @@ public class PhoneDao {
 					String company = rs.getString("company");
 
 					personVo = new PersonVo(id, name, hp, company);
-					
-				}
-		
 
+				}
+
+				
 			} catch (SQLException e) {
 				System.out.println("error:" + e);
 			}
-		
-		
-		
-		
+	
+			
 			close();
 			return personVo;
+			
 		}
-	
+				
 }
